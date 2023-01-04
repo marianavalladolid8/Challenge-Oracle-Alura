@@ -1,29 +1,58 @@
-var textoDigitado = document.querySelector("#area-texto"); 
-var textoGravado = document.querySelector("#texto-saida");
+let textarea = document.querySelector("#input_textarea");
+let result = document.querySelector("#result_textarea");
+let encryptButton = document.querySelector("#encrypt_button");
+let decryptButton = document.querySelector("#decrypt_button");
+let copyButton = document.querySelector("#copy_button");
+let clearButton = document.querySelector("#clear_button")
 
-function encriptar(){
-    var texto = textoDigitado.value; 
+function encrypt(){
+    let text = textarea.value;
+    let encryptedText = text.replaceAll("e", "enter")
+    .replaceAll("i", "imes")
+    .replaceAll("a", "ai")
+    .replaceAll("o", "ober")
+    .replaceAll("u", "ufat");
+    result.value = encryptedText;
+    showResult();
+}
+
+function decrypt(){
+    let text = textarea.value;
+    let decryptedText = text.replaceAll("enter", "e")
+    .replaceAll("imes", "i")
+    .replaceAll("ai", "a")
+    .replaceAll("ober", "o")
+    .replaceAll("ufat", "u");
+    result.value = decryptedText;
+    showResult();
+}
+
+function copy(){
+    if(result.value){
+        // window.alert("copied")
+        window.navigator.clipboard.writeText(result.value);
+    }
     
-    var resultadoCrip = texto.replace(/e/g, "enter").replace(/i/g, "imes").replace(/a/g, "ai")
-    .replace(/o/g, "ober").replace(/u/g, "ufat");
+    textarea.focus();
+}
+
+function clear(){
+    result.value = "";
+    textarea.focus();
+
+}
+
+function showResult(){
+    let noMessageDiv = document.querySelector("#no_message");
+    let resultDiv = document.querySelector("#result");
     
-    document.getElementById("texto-saida").innerHTML ='<textarea  id="resultado" >'+ resultadoCrip +'</textarea>' +
-     '<button id="bt-copiar" onclick="copiar()">Copiar</button>';
-   
-};
-function desencrptar(){
-    var texto = textoDigitado.value;
+    if(!noMessageDiv.classList.contains("hidden")){
+        noMessageDiv.classList.toggle("hidden");
+        resultDiv.classList.toggle("hidden");
+    }
+}
 
-    var resultadoDesc = texto.replace(/enter/g, "e").replace(/imes/g, "e").replace(/ai/g, "a").replace(/ober/g, "o").replace(/ufat/g, "u");
-
-    document.getElementById("texto-saida").innerHTML = '<textarea  id="resultado">'+ resultadoDesc +'</textarea>' +
-     '<button id="bt-copiar" onclick="copiar()">Copiar</button>';
-};
-
-function copiar() {
-    var textoCopiado = document.getElementById('resultado');
-  
-    textoCopiado.select();
-    document.execCommand('copy');
-    alert("Texto copiado.");
-} 
+encryptButton.onclick = encrypt;
+decryptButton.onclick = decrypt;
+copyButton.onclick = copy;
+clearButton.onclick = clear;
