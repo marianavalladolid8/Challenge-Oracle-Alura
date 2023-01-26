@@ -29,7 +29,7 @@ function decrypt(){
 
 function copy(){
     if(result.value){
-        // window.alert("copied")
+         window.alert("copied")
         window.navigator.clipboard.writeText(result.value);
     }
     
